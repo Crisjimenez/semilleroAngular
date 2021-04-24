@@ -1,0 +1,67 @@
+<div class="card col-xs-12 col-md-12 col-lg-12" style="width: 18rem;">
+  <div class="card-header">
+    <div class="row center centrar">
+      <!--Titulo-->
+      <div class="col-xs-10 col-md-10 col-lg-10">
+        <h5 class="card-title">Quieres publicar?</h5>
+      </div>
+    </div>
+  </div>
+  <form autocomplete="off" [formGroup]="form" (ngSubmit)="publicarPost()">
+    <div class="card-body">
+      <input type="text" class="form-control alinear-izq" placeholder="Comenta" formControlName="posted_text">
+      <br><br>
+      <input type="file" class="form-control" (change)="addImagen($event)" accept=".jpg, .png">
+    </div>
+    <div class="card-footer">
+      <div class="row center centrar">
+        <div class="col-xs-6 col-md-6 col-lg-6 alinear-izq">
+          <!-- button class="btn btn-outline-secondary reacciones" (click)="addImagen($event)"><i class="far fa-image"></i></!-->
+        </div>
+        <div class="col-xs-6 col-md-6 col-lg-6 alinear-der">
+          <button class="btn btn-primary margin-8" type="submit">Publicar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--Card-->
+<div infiniteScroll [infiniteScrollDistance]="2" (scrolled)="cargarListaPublicaciones()">
+  <div class="card col-xs-12 col-md-12 col-lg-12" style="width: 18rem;" *ngFor="let pub of publicaciones; index as i;">
+    <div class="card-header">
+      <div class="row center centrar">
+        <!--Foto perfil-->
+        <div class="col-xs-2 col-md-2 col-lg-2">
+          <img [src]="pub.user.avatar" class="foto-circular " />
+        </div>
+        <!--Titulo-->
+        <div class="col-xs-10 col-md-10 col-lg-10">
+          <h5 class="card-title">{{pub.user.name}}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>{{pub.posted_text}}</p>
+      <img *ngIf="pub.image_url" [src]="pub.image_url" class="card-img-top " alt="..." />
+    </div>
+    <div class="card-footer">
+      <div class="row center centrar">
+        <div class="col-xs-6 col-md-6 col-lg-6 alinear-izq">
+          <button class="btn {{pub.meGusto ? 'btn-primary' : 'btn-outline-primary'}} reacciones"
+            (click)="addMeGusta(pub)">
+            <i class="far fa-thumbs-up"></i>{{pub.numLikes === 0 ? '' : pub.numLikes}}
+          </button>
+        </div>
+        <div class="col-xs-6 col-md-6 col-lg-6 alinear-der">
+          <button class="btn {{pub.numComments > 0 ? 'btn-primary' : 'btn-outline-primary'}} reacciones"
+            (click)="comentar(pub.comments, pub.ID)"><i class="far fa-comments"></i>{{pub.numComments === 0 ? '' :
+            pub.numComments}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+&nbsp;

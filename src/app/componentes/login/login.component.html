@@ -1,0 +1,34 @@
+<div class="espacio"></div>
+
+<div class="row">
+  <div class="col-sm">
+  </div>
+  <div class="col-sm border-shadow">
+    <h2 class="centrar">RedSocial</h2>
+    <br><br>
+    <form autocomplete="off" [formGroup]="form" (ngSubmit)="iniciarSesion()">
+      <div>
+        <input type="text" placeholder="correo electrónico" formControlName="email" class="form-control colorForm">
+        <small class="text-danger" *ngIf="campoValido('email', 'required')">El campo es requerido</small>
+        <small class="text-danger" *ngIf="campoValido('email', 'minLength')">La longitud minima es 3
+          caracteres</small>
+        <small class="text-danger" *ngIf="campoValido('email', 'pattern')">Correo no valido.</small>
+        <br>
+        <input type="password" placeholder="Contraseña" formControlName="password" class="form-control colorForm">
+        <small class="text-danger" *ngIf="campoValido('password', 'required')">El campo es
+          requerido</small>
+      </div>
+      <br>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </div>
+      <hr>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-success" type="button" (click)="abrirForm()">Registro</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm">
+
+  </div>
+</div>

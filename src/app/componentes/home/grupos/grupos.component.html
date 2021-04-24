@@ -1,0 +1,35 @@
+<div class="card col-xs-12 col-md-12 col-lg-12" style="width: 18rem;">
+  <div class="card-header">
+    <div class="row center centrar">
+        <h5 class="card-title">Grupos
+
+          <button class="btn btn-primary reacciones w-30"
+          (click)="direccionarCrearGrupo()" alt="Crear grupo">
+          <i class="far fa-user-friends"></i>
+        </button>
+        </h5>
+
+    </div>
+  </div>
+</div>
+<div>
+  <table>
+    <tr class="border-bottom" *ngFor="let grup of grupos; index as i;">
+      <td style="width: 30%;">
+        <img [src]="grup.imageUrl" class="foto-circular-amigos"  /></td>
+      <td class="alinear-izq">
+        <h5>{{grup.name}}</h5>
+      </td>
+      <td>
+        <button *ngIf="!grup.existeUsuario" class="btn btn-outline-primary reacciones"
+          (click)="entrarGrupo(grup)">
+          <i class="far fa-plus"></i>
+        </button>
+
+        <button *ngIf="grup.existeUsuario" class="btn btn-outlin-success reacciones">
+          <i class="far fa-check"></i>
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

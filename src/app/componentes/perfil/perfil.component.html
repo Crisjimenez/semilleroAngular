@@ -1,0 +1,26 @@
+<div class="espacio"></div>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <!--Foto-->
+    <div class="col-sm-2 border-shadow">
+      <img class="foto-circular-perfil" src="{{perfil.avatar}}" alt="..." >
+    </div>
+    <!--Info perfil-->
+    <div class="col-sm-7 border-shadow">
+      <h1>{{perfil.name}}</h1>
+      <h2>{{perfil.CreatedAt| date : 'mediumDate'}}</h2>
+      <h3>{{perfil.email}}</h3>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
+
+  <div class="espacio"></div>
+
+  <!-- Publicaciones -->
+  <div class="row">
+    <div class="col-xs-10 col-md-10 col-lg-10 border-shadow">
+      <app-publicaciones [idUsuario]="perfil.ID"></app-publicaciones>
+    </div>
+
+  </div>

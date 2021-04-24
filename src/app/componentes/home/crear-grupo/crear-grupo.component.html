@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-xs-12 col-md-12 col-lg-12 border-shadow">
+    <div class="row">
+      <div class="row center centrar">
+        <div class="col-xs-11 col-md-11 col-lg-11">
+          <h3>Crea Grupo</h3>
+        </div>
+        <div class="col-xs-1 col-md-1 col-lg-1">
+          <button class="btn btn-outline-danger reacciones" (click)="cerrarModal()"><i class="far fa-times"></i></button>
+        </div>
+      </div>
+
+      <br><br>
+      <form autocomplete="off" [formGroup]="form" (ngSubmit)="guardar()">
+        <div class="row form-group label-left">
+          <label>Nombre Grupo</label>
+          <input type="text" class="form-control" placeholder="Nombre Grupo" formControlName="name">
+          <small class="text-danger" *ngIf="campoValido('name', 'required')">El campo es requerido</small>
+          <small class="text-danger" *ngIf="campoValido('name', 'minLength')">La longitud minima es 3
+            caracteres</small>
+        </div>
+
+        <div class="row form-group label-left">
+          <label>Descripción grupo</label>
+          <input type="text" class="form-control" placeholder="Descripción" formControlName="description">
+          <small class="text-danger" *ngIf="campoValido('description', 'required')">El campo es requerido</small>
+          <small class="text-danger" *ngIf="campoValido('description', 'minLength')">La longitud minima es 3
+            caracteres</small>
+        </div>
+
+        <div class="row form-group">
+          <div class="class">
+            <button class="btn btn-outline-success" type="submit">Aceptar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="card col-xs-12 col-md-12 col-lg-12" style="width: 18rem;">
+  <div class="card-header">
+    <div class="row center centrar">
+      <div class="col-xs-11 col-md-11 col-lg-11">
+        <h5 class="card-title">Comentarios</h5>
+      </div>
+      <div class="col-xs-1 col-md-1 col-lg-1">
+        <button class="btn btn-outline-danger reacciones" (click)="cerrarModal()"><i class="far fa-times"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card col-xs-12 col-md-12 col-lg-12" style="width: 18rem;" *ngFor="let cmm of comentarios; index as i;">
+  <div class="card-header quitar-padding">
+    <div class="row center centrar">
+      <!--Foto perfil-->
+      <div class="col-xs-1 col-md-1 col-lg-1">
+        <img [src]="cmm.User.avatar" class="foto-circular " />
+      </div>
+      <!--Titulo-->
+      <div class="col-xs-10 col-md-10 col-lg-10">
+        <h5 class="card-title">{{cmm.User.name}}</h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body quitar-padding">
+    <p>{{cmm.comment}}</p>
+  </div>
+  <div class="card-footer quitar-padding">
+    <div class="row center centrar">
+      <div class="alinear-izq">
+        <button class="btn btn-outline-primary reacciones"><i class="far fa-thumbs-up"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="comentar()">
+  <div class="card-header quitar-padding alinear-der">
+    <input type="text" class="form-control alinear-izq" placeholder="Comenta" formControlName="comment">
+    <br />
+    <button class="btn btn-primary margin-8" type="submit">Comentar</button>
+  </div>
+</form>

@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="mostrarMenu">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="'publicacion'">RedSocial</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
+      aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'perfil'">Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'home'">Publicaciones</a>
+        </li>
+      </ul>
+    </div>
+    <form class="d-flex" autocomplete="off" [formGroup]="form" (ngSubmit)="buscar()">
+      <input class="form-control me-2 w-300" type="search" formControlName="buscar" placeholder="Buscar" aria-label="Buscar">
+      <button class="btn btn-success " type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <img class="foto-circular-perfil w-40" src="{{usuario.avatar}}" alt="..." >
+      </li>
+      <li>
+        <a class="nav-link" [routerLink]="'perfil'">{{usuario.name}}</a>
+      </li>
+    </ul>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-danger" (click)="salir()">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+</nav>

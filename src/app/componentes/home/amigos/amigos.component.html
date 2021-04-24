@@ -1,0 +1,26 @@
+<div class="card col-xs-12 col-md-12 col-lg-12" style="width: 18rem;">
+  <div class="card-header">
+    <div class="row center centrar">
+        <h5 class="card-title">Amigos</h5>
+    </div>
+  </div>
+</div>
+<div>
+  <table>
+    <tr class="border-bottom" *ngFor="let usr of amigos; index as i;">
+      <td style="width: 30%;">
+        <img [src]="usr.avatar" class="foto-circular-amigos" (click)="entrarPerfil(usr)"/>
+      </td>
+      <td class="alinear-izq">
+        <a (click)="entrarPerfil(usr)"><h5 class="color-amigos">{{usr.name}}</h5></a>
+      </td>
+      <td>
+        <button class="btn btn-outline-primary reacciones"
+        (click)="agregarAmigo(usr)">
+        <i class="far fa-user-plus"></i>
+      </button>
+      </td>
+
+    </tr>
+  </table>
+</div>

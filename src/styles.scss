@@ -1,0 +1,88 @@
+.espacio {
+  height: 25px;
+}
+
+.bg-dark {
+  background-color: #093c73 !important;
+}
+
+.card-header {
+  background-color: #093c73;
+  color: white;
+  padding: 5px;
+}
+
+.card {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.border-shadow {
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 30px;
+  text-align: center;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.8) 0px 0 10px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+  box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+}
+
+body {
+  background-color: #9a9a9a2e
+}
+
+.label-left {
+  text-align: left;
+}
+
+.foto-circular {
+  border-radius: 50%;
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.foto-circular-perfil {
+  border-radius: 50%;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.card {
+  width: 100% !important;
+  margin-bottom: 20px;
+}
+
+.foto-circular-amigos {
+  border-radius: 50%;
+  width: 40% !important;
+}
+
+.reacciones {
+  border-radius: 50%;
+}
+
+.alinear-izq {
+  text-align-last: left;
+  text-align: left;
+  float: left;
+}
+
+.alinear-der {
+  text-align-last: right;
+  text-align: right;
+}
+
+.border-bottom{
+  border-bottom: groove;
+}
+
+.w-300 {
+  width: 300px !important;
+}
+
+.w-40 {
+  width: 40px !important;
+}
