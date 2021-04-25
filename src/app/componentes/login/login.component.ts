@@ -28,11 +28,11 @@ export class LoginComponent extends ComponentUtil implements OnInit {
         Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$')
       ]],
       password: ['', [Validators.required]]
-      });
+    });
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   campoValido(campo: string, error: string): boolean {
     return this.campoValidoUtil(campo, error, this.form);
@@ -45,26 +45,27 @@ export class LoginComponent extends ComponentUtil implements OnInit {
         'Formulario incompleto',
         'error'
       );
-      return
+
+    } else {
+
+      const values = this.form.value;
+      const login = values as Login;
+
+      this.autenticacionService.login(login).then(user => {
+        this.router.navigate([`/home`]);
+
+        Swal.fire(
+          'Login exitoso.',
+          `Bienvenido ${user.name}`,
+          'success'
+        );
+      }).catch(error => {
+        console.error(error);
+      });
     }
-    const values = this.form.value;
-    const login = values as Login;
-
-    this.autenticacionService.login(login).then(user => {
-      this.router.navigate([`/home`]);
-
-      Swal.fire(
-        'Login exitoso.',
-        `Bienvenido ${user.name}`,
-        'success'
-      );
-    }).catch(error => {
-      console.error(error);
-    });
-
   }
 
-  abrirForm(){
+  abrirForm() {
     this.router.navigate([`/registro`]);
   }
 

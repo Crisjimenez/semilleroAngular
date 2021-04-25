@@ -58,7 +58,7 @@ export class CrearGrupoComponent extends ComponentUtil implements OnInit {
 
       this.form.get('name')?.setValue('');
       this.form.get('description')?.setValue('');
-      this.cerrarModal()
+      this.cerrarModal();
       Swal.fire(
         'Creación exitosa.',
         `Grupo ${grupo.name}`,

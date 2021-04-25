@@ -48,25 +48,12 @@ export class GruposComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  existeUsuarioEnGrupo(grup: Grupo): boolean {
-    let existe = false;
-    if (grup.users) {
-      grup.users.forEach(element => {
-        if (element.ID === this.idUsuario) {
-          existe = true;
-        }
-      });
-    }
-
-    return existe;
-  }
-
   direccionarCrearGrupo() {
     const modalRef = this.modal.open(CrearGrupoComponent,
       { backdrop: 'static', size: 'md', windowClass: 'modal' });
 
-    modalRef.componentInstance.agregoGrupo.subscribe((dato: Boolean | null) => {
-      if (dato) {
+    modalRef.componentInstance.agregoGrupo.subscribe((agregaron: Boolean | null) => {
+      if (agregaron) {
         this.consultarGrupos();
       }
     });

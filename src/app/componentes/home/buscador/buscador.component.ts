@@ -13,14 +13,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class BuscadorComponent implements OnInit {
 
   resultados: Usuario[] = [];
-texto: string = '';
+  texto: string = '';
 
   constructor(
     private activeRoute: ActivatedRoute,
     private usuarioService: UsuarioService,
     private router: Router,
     private session: SessionService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -43,7 +43,7 @@ texto: string = '';
     }, error => console.error(error));
   }
 
-  entrarPerfil(usuario: Usuario){
+  entrarPerfil(usuario: Usuario) {
     const idUsuario = usuario.ID;
     this.usuarioService.setUsuario(usuario);
     this.router.navigate([`/perfil`], { queryParams: { idUsuario } });

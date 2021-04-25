@@ -11,7 +11,7 @@
   </div>
 </div>
 
-
+<!--Lista comentarios-->
 <div class="card col-xs-12 col-md-12 col-lg-12" style="width: 18rem;" *ngFor="let cmm of comentarios; index as i;">
   <div class="card-header quitar-padding">
     <div class="row center centrar">
@@ -28,15 +28,9 @@
   <div class="card-body quitar-padding">
     <p>{{cmm.comment}}</p>
   </div>
-  <div class="card-footer quitar-padding">
-    <div class="row center centrar">
-      <div class="alinear-izq">
-        <button class="btn btn-outline-primary reacciones"><i class="far fa-thumbs-up"></i></button>
-      </div>
-    </div>
-  </div>
 </div>
 
+<!--Comentar-->
 <form autocomplete="off" [formGroup]="form" (ngSubmit)="comentar()">
   <div class="card-header quitar-padding alinear-der">
     <input type="text" class="form-control alinear-izq" placeholder="Comenta" formControlName="comment">

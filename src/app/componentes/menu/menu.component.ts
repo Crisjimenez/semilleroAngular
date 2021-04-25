@@ -56,10 +56,10 @@ export class MenuComponent implements OnInit {
         'Debe ingresar algun valor a buscar',
         'error'
       );
-      return
+    } else {
+      this.usuarioService.subscripcionBuscar.next(texto);
+      this.router.navigate([`/buscar`], { queryParams: { texto } });
     }
-    this.usuarioService.subscripcionBuscar.next(texto);
-    this.router.navigate([`/buscar`], { queryParams: { texto } });
   }
 
 }

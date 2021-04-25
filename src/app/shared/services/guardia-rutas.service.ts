@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {SessionService} from './session.service';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { SessionService } from './session.service';
 
 @Injectable()
 export class GuardiaRutasService implements CanActivate {
@@ -17,9 +17,10 @@ export class GuardiaRutasService implements CanActivate {
     const token = this.session.obtenerToken();
     if (Boolean(token)) {
       return true;
+    } else {
+      this.session.limpiarSession();
+      this.router.navigate(['/login']);
+      return false;
     }
-    this.session.limpiarSession();
-    this.router.navigate(['/login']);
-    return false;
   }
 }

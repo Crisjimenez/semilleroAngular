@@ -76,69 +76,100 @@ export class PublicacionesComponent implements OnInit {
           return;
         }
 
-        if (data.event === 'new::post') {
-          let publ = new Publicacion();
-          Object.assign(publ, data.post);
-          publ.contComentarios();
-          publ.contLikes();
-          publ.tieneMeGusta(this.idUsuario);
-          this.publicaciones.push(publ);
-          return;
-        }
       });
+
+      if (data.event === 'new::post') {
+        let publ = new Publicacion();
+        Object.assign(publ, data.post);
+        publ.contComentarios();
+        publ.contLikes();
+        publ.tieneMeGusta(this.idUsuario);
+        this.publicaciones.push(publ);
+        return;
+      }
     });
+  }
+
+  mostrarNotificacion(tipo: string) {
+    if (tipo === 'new::reaction') {
+      this.toastr.success('Me gusta', `agragaron me gusta.`);
+      return;
+    }
+
+    if (tipo === 'remove::reaction') {
+      this.toastr.success('Me gusta', `quitaron me gusta.`);
+      return;
+    }
+
+    if (tipo === 'new::comment') {
+      this.toastr.success('Comentaron', `Alguien comento tu publicación.`);
+      return;
+    }
+
+    if (tipo === 'new::post') {
+      this.toastr.success('Publicación', `Alguien agrego una publicación.`);
+      return;
+    }
   }
 
   cargarListaPublicaciones() {
 
-    if (this.idUsuario && this.idUsuario > 0) {
-      this.publicaciones = [];
-      this.publicacionService.consultarPublicacionesPorUsuario(this.idUsuario).subscribe(pubs => {
-        if (pubs) {
-          let publicacionesAlt = pubs.map(pub => {
-            let publ = new Publicacion();
-            Object.assign(publ, pub);
+    // consulta publicaciones por usuario (perfil)
+    if (this.existeSiguientePagina) {
+      if (this.idUsuario && this.idUsuario > 0) {
+        this.consultarPublicacionesPorPerfil();
 
-            publ.contComentarios();
-            publ.contLikes();
-            publ.tieneMeGusta(this.idUsuario);
-            return publ;
-          });
-
-          this.publicaciones = publicacionesAlt;
-        }
-
-      }, error => console.error(error));
-
-    } else {
-      if (this.existeSiguientePagina) {
-        this.publicacionService.consultarPublicacionesPaginadas(this.siguientePagina).subscribe(pubs => {
-          if (!pubs) {
-            return;
-          }
-          if (pubs.next) {
-            this.siguientePagina = pubs.next;
-            this.existeSiguientePagina = true;
-          } else {
-            this.siguientePagina = '';
-            this.existeSiguientePagina = false;
-          }
-
-          let publicacionesAlt = pubs.results.map(pub => {
-            //let publ = pub;
-
-            let publ = new Publicacion();
-            Object.assign(publ, pub);
-            publ.contComentarios();
-            publ.contLikes();
-            publ.tieneMeGusta(this.usuario.ID);
-            return publ;
-          });
-
-          this.publicaciones = this.publicaciones.concat(publicacionesAlt);
-        }, error => console.error(error));
+        //consulta todas las publicaciones
+      } else {
+        this.consultarTodasLasPublicaciones();
       }
     }
+  }
+
+  consultarPublicacionesPorPerfil() {
+    this.publicaciones = [];
+    this.publicacionService.consultarPublicacionesPorUsuario(this.idUsuario).subscribe(pubs => {
+      if (pubs) {
+        let publicacionesAlt = pubs.map(pub => {
+          let publ = new Publicacion();
+          Object.assign(publ, pub);
+
+          publ.contComentarios();
+          publ.contLikes();
+          publ.tieneMeGusta(this.idUsuario);
+          return publ;
+        });
+
+        this.publicaciones = publicacionesAlt;
+        this.existeSiguientePagina = false;
+      }
+    }, error => console.error(error));
+  }
+
+  consultarTodasLasPublicaciones() {
+    this.publicacionService.consultarPublicacionesPaginadas(this.siguientePagina).subscribe(pubs => {
+      if (pubs) {
+        // saco paginado
+        if (pubs.next) {
+          this.siguientePagina = pubs.next;
+          this.existeSiguientePagina = true;
+        } else {
+          this.siguientePagina = '';
+          this.existeSiguientePagina = false;
+        }
+
+        let publicacionesAlt = pubs.results.map(pub => {
+          let publ = new Publicacion();
+          Object.assign(publ, pub);
+          publ.contComentarios();
+          publ.contLikes();
+          publ.tieneMeGusta(this.usuario.ID);
+          return publ;
+        });
+
+        this.publicaciones = this.publicaciones.concat(publicacionesAlt);
+      }
+    }, error => console.error(error));
   }
 
   publicarPost() {
@@ -150,26 +181,25 @@ export class PublicacionesComponent implements OnInit {
         'Debe ingresar una imagen o un comentario.',
         'error'
       );
-      return
-    }
-
-    // si guarda con imagen
-    if (this.pathImagen) {
-      // Guardamos la imagen
-      const ref = this.storage.ref(this.pathImagen);
-      const tarea = this.storage.upload(this.pathImagen, this.imagen);
-
-      tarea.snapshotChanges().pipe(
-        finalize(() => {
-          ref.getDownloadURL().subscribe(urlImg => {
-            this.guardarPublicacion(urlImg);
-          });
-        })
-      ).subscribe();
-
-      // guarda sin imagen
     } else {
-      this.guardarPublicacion();
+      // si guarda con imagen
+      if (this.pathImagen) {
+        // Guardamos la imagen
+        const ref = this.storage.ref(this.pathImagen);
+        const tarea = this.storage.upload(this.pathImagen, this.imagen);
+
+        tarea.snapshotChanges().pipe(
+          finalize(() => {
+            ref.getDownloadURL().subscribe(urlImg => {
+              this.guardarPublicacion(urlImg);
+            });
+          })
+        ).subscribe();
+
+        // guarda sin imagen
+      } else {
+        this.guardarPublicacion();
+      }
     }
 
   }
@@ -191,6 +221,7 @@ export class PublicacionesComponent implements OnInit {
     });
   }
 
+  //add Imagen firebase
   addImagen(evt: any) {
     this.imagen = evt.target.files[0];
     const partes = this.imagen.name.split('.');
@@ -219,28 +250,5 @@ export class PublicacionesComponent implements OnInit {
       }
     });
   }
-
-  mostrarNotificacion(tipo: string){
-    if (tipo === 'new::reaction') {
-      this.toastr.success('Me gusta', `agragaron me gusta.`);
-      return;
-    }
-
-    if (tipo === 'remove::reaction') {
-      this.toastr.success('Me gusta', `quitaron me gusta.`);
-      return;
-    }
-
-    if (tipo === 'new::comment') {
-      this.toastr.success('Comentaron', `Alguien comento tu publicación.`);
-      return;
-    }
-
-    if (tipo === 'new::post') {
-      this.toastr.success('Publicación', `Alguien agrego una publicación.`);
-      return;
-    }
-  }
-
 
 }

@@ -26,10 +26,11 @@ export class SessionService {
 
   obtenerUsuario(): Usuario {
     const usuarioJson = window.sessionStorage.getItem('app-posts-usuario-objeto') || '';
-    if (!Boolean(usuarioJson)) {
-      return {} as Usuario;
+    let usuarioRetorno = {} as Usuario;
+    if (Boolean(usuarioJson)) {
+      usuarioRetorno = JSON.parse(usuarioJson);
     }
-    return JSON.parse(usuarioJson);
+    return usuarioRetorno;
   }
 
   limpiarSession() {

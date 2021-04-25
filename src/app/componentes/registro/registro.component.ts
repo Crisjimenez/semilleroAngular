@@ -27,7 +27,7 @@ export class RegistroComponent extends ComponentUtil implements OnInit {
         Validators.required,
         Validators.minLength(3),
       ]],
-      email: ['', [ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$') ]],
+      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$')]],
       password: ['', [
         Validators.required,
         Validators.minLength(6)
@@ -42,34 +42,33 @@ export class RegistroComponent extends ComponentUtil implements OnInit {
     return this.campoValidoUtil(campo, error, this.form);
   }
 
-  guardar(){
+  guardar() {
     if (this.form.invalid) {
       Swal.fire(
         'Error!',
         'Formulario incompleto',
         'error'
       );
-      return
+    } else {
+      const values = this.form.value;
+      const registro = values as Usuario;
+
+      this.usuarioService.registro(registro).subscribe(user => {
+
+        this.router.navigate([`/login`]);
+
+        Swal.fire(
+          'Registro exitoso.',
+          `Registro almacenado correctamente`,
+          'success'
+        );
+      }, error => {
+        console.error(error);
+      });
     }
-    const values = this.form.value;
-    const registro = values as Usuario;
-
-    this.usuarioService.registro(registro).subscribe(user => {
-
-      this.router.navigate([`/login`]);
-
-      Swal.fire(
-        'Registro exitoso.',
-        `Registro almacenado correctamente`,
-        'success'
-      );
-    },error => {
-      console.error(error);
-    });
-
   }
 
-  volver(){
+  volver() {
     this.router.navigate([`/login`]);
   }
 

@@ -17,26 +17,28 @@ export class InterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.session.obtenerToken();
-    if (!Boolean(token)) {
+    if (Boolean(token)) {
       request = request.clone({
         headers: request.headers
           .set('Content-Type', 'application/json')
+          .set('Authorization', `Bearer ${token}`)
       });
     } else {
       request = request.clone({
         headers: request.headers
           .set('Content-Type', 'application/json')
-          .set('Authorization', `Bearer ${token}`)
       });
     }
 
     return next.handle(request).pipe(
       tap(() => { }, err => {
         if (err instanceof HttpErrorResponse) {
-          if (err.status !== 401) {
+          if (err.status === 401) {
+            this.session.limpiarSession();
+            this.router.navigate(['/login']);
+          } else {
             return;
           }
-          this.router.navigate(['/login']);
         }
       })
     );

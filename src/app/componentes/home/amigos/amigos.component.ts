@@ -42,6 +42,7 @@ export class AmigosComponent implements OnInit {
   agregarAmigo(usuario: Usuario){
     const addAmigo = {} as Seguidor;
     addAmigo.followed_id = usuario.ID;
+    // id usuario conectado
     addAmigo.user_id = this.session.obtenerUsuario().ID;
 
     this.usuarioService.seguirUsuario(addAmigo).subscribe(add => {
